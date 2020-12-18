@@ -27,7 +27,7 @@ class UserConfig </ help="This plugin: 1. Changes light profiles while navigatin
 		delayTime="1000";
     
 	</ label = "Reset Time", 
-		help="This is the period of time until the profile resets",
+		help="This is the period of time until the profile resets to the default (if set)",
 		order=order++ />
 		reset_time="10000"; 
     
@@ -68,6 +68,7 @@ class Emitter {
     key_delay = null 
 	status = null // active, waiting
 	currentRom="attract" 
+    default_rotation = false
     last_check = 0 
 	constructor() {
         config = fe.get_config()
@@ -93,10 +94,24 @@ class Emitter {
         key = config["key"]
         signalTime = 0
 		status = "waiting"
-		introStatus = 0
         key_delay = 250
 		last_check = 0
-
+        
+        switch (config["default_rotation"]) {
+			case "Vertical 2-way":
+                default_rotation = "vertical2"
+				break
+			case "4-way":
+				default_rotation = "4"
+				break
+            case "8-way":
+                default_rotation = "8" 
+                break
+            case "Analog":
+                default_rotation = "analog"
+                break
+                
+		}
         if ( config["mode"] == "Automatic" )
         {
             fe.add_ticks_callback(this, "ticks")
@@ -236,10 +251,10 @@ class Emitter {
         
         local no_rotate = " --no-rotate"
           
-        if (config["default_rotation"] !="Use profile default")
+        if (default_rotation != false)
         {
             // example: rotator 1 1 4 2 1 4 
-            system("rotator 1 1 " + config["default_rotation"] + " 2 1 " + config["default_rotation"] +  "  > /dev/null 2>&1") 
+            system("rotator 1 1 " + default_rotation + " 2 1 " + default_rotation +  "  > /dev/null 2>&1") 
             no_rotate = ""  // turn off rotation for the profile since we're setting a mode here.
         }
  
