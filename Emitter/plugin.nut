@@ -218,6 +218,7 @@ class Emitter {
         local expression = regexp("f(?:inal burn|ba)|neo ?geo|(?:daphn|mam)e|arcade") // check for arcade-type systems
         local is_arcade = expression.match(emulatorname.tolower())
 	    //system ("echo \"match: "+ is_arcade + "\"") 
+        //system ("echo \"match: "+ is_arcade + "\"") 
         
         if (is_arcade)
         {
@@ -227,9 +228,9 @@ class Emitter {
             system("rotator 1 1 8 2 1 8 > /dev/null 2>&1") 
           }
           //example: system("emitter LoadProfileByEmulator galaga arcade") 
-		  system("emitter LoadProfileByEmulator " + "\"" + fe.game_info(Info.Name ) + "\"" + " arcade" + no_rotate + " > /dev/null 2>&1") 
+		  system("emitter LoadProfileByEmulator " + "\"" + fe.game_info(Info.Name ) + "\"" + " arcade " + no_rotate + " > /dev/null 2>&1") 
           // print what just happened for debug purposes
-          //system("echo \"emitter LoadProfileByEmulator " + fe.game_info(Info.Name) + " " +  emulatorname + " --no-rotate\"") 
+          // system("echo \"emitter LoadProfileByEmulator " + fe.game_info(Info.Name) + " arcade  " + no_rotate + "\"") 
         }
         else
         {
@@ -260,7 +261,7 @@ class Emitter {
  
         if (config["default_profile"] != "" )
         {
-            system("emitter LoadProfile " + config["default_profile"] + no_rotate + " > /dev/null 2>&1" )
+            system("emitter LoadProfile " + config["default_profile"] + " " + no_rotate + " > /dev/null 2>&1" )
         }
     }
     /* ************************************  
