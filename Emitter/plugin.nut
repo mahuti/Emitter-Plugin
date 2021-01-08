@@ -217,7 +217,6 @@ class Emitter {
         
         local expression = regexp("f(?:inal burn|ba)|neo ?geo|(?:daphn|mam)e|arcade") // check for arcade-type systems
         local is_arcade = expression.match(emulatorname.tolower())
-	    //system ("echo \"match: "+ is_arcade + "\"") 
         //system ("echo \"match: "+ is_arcade + "\"") 
         
         if (is_arcade)
